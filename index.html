@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>臺灣地震測報與次世代科技應用 - 互動展演平台</title>
+  <meta name="description" content="本平台提供中央氣象署地震測報中心有關地震預警系統演進，以及 AI 代理與大型語言模型 (LLMs) 在次世代地震測報應用的互動展示與模擬。">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i data-lucide="activity" class="pulse-icon"></i>
+          <span>SeismoTech</span>
+        </div>
+        <p class="subtitle">次世代地震測報平台</p>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="home" id="btn-tab-home">
+          <i data-lucide="home"></i>
+          <span>首頁大廳</span>
+        </button>
+        <button class="nav-btn" data-tab="slides" id="btn-tab-slides">
+          <i data-lucide="presentation"></i>
+          <span>簡報瀏覽</span>
+        </button>
+        <button class="nav-btn" data-tab="simulator" id="btn-tab-simulator">
+          <i data-lucide="map-pin"></i>
+          <span>地震預警模擬</span>
+        </button>
+        <button class="nav-btn" data-tab="agents" id="btn-tab-agents">
+          <i data-lucide="cpu"></i>
+          <span>AI 代理群模擬</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="footer-info">
+          <p class="copyright">中央氣象署 地震測報中心</p>
+          <p class="author">陳達毅 科長 撰寫</p>
+        </div>
+        <a href="https://github.com/firebakr0929/20260709" target="_blank" class="github-link" id="link-github-repo">
+          <i data-lucide="github"></i>
+          <span>GitHub 儲存庫</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1 id="page-title">首頁大廳</h1>
+          <p id="page-subtitle" class="text-muted">歡迎來到臺灣地震測報與次世代科技應用展示平台</p>
+        </div>
+        <div class="header-right">
+          <!-- Theme Toggle -->
+          <button id="theme-toggle-btn" class="icon-btn" title="切換主題">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+          </button>
+          <!-- Deployment Status Badge -->
+          <div class="deploy-badge">
+            <span class="badge-dot animate-pulse"></span>
+            <span>GitHub Pages 已就緒</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Panels -->
+      <div class="content-panel active" id="panel-home">
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="hero-content">
+            <span class="badge">前沿科技 & 防災宣導</span>
+            <h2>連結次世代科技，與時間競速的地震測報</h2>
+            <p>本平台結合了中央氣象署地震測報中心最新宣導內容，提供互動式簡報閱讀器、即時地震波動與預警時間模擬器，以及未來 AI 代理群協同運作的地震測報流程展示。</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="switchTab('simulator')">
+                <i data-lucide="play"></i> 開始預警模擬
+              </button>
+              <button class="btn btn-secondary" onclick="switchTab('slides')">
+                <i data-lucide="book-open"></i> 閱讀地震簡報
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="seismic-wave-decoration">
+              <div class="wave wave-1"></div>
+              <div class="wave wave-2"></div>
+              <div class="wave wave-3"></div>
+              <div class="seismic-core"><i data-lucide="shield-alert"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide Decks Overview -->
+        <section class="section-container">
+          <h3 class="section-title">收錄簡報專題</h3>
+          <div class="grid grid-2">
+            <div class="slide-card glass" onclick="openSlideDeck('eew')">
+              <div class="card-icon"><i data-lucide="clock"></i></div>
+              <div class="card-content">
+                <span class="card-meta">2026 年 6 月 12 日 | 嘉義災防宣導</span>
+                <h4>臺灣地震預警系統的演進與發展</h4>
+                <p>探討臺灣地震環境、現地型與區域型預警原理、以及即時逐秒觀測震度如何協助防災決策。</p>
+                <div class="card-footer">
+                  <span>共 <span id="eew-slide-count">--</span> 張投影片</span>
+                  <i data-lucide="arrow-right"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="slide-card glass" onclick="openSlideDeck('ai')">
+              <div class="card-icon"><i data-lucide="bot"></i></div>
+              <div class="card-content">
+                <span class="card-meta">2026 年 6 月 3 日 | 北市大資科系演講</span>
+                <h4>AI 代理群與大型語言模型在次世代地震測報之整合與應用</h4>
+                <p>展望生成式 AI、大型語言模型與多代理群技術，如何顛覆傳統地震監測、警報發佈與災情統整。</p>
+                <div class="card-footer">
+                  <span>共 <span id="ai-slide-count">--</span> 張投影片</span>
+                  <i data-lucide="arrow-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Showcase -->
+        <section class="section-container">
+          <h3 class="section-title">互動工具特色</h3>
+          <div class="grid grid-3">
+            <div class="feature-card glass">
+              <i data-lucide="sliders" class="feature-icon text-cyan"></i>
+              <h5>即時波動與預警盲區模擬</h5>
+              <p>自由設定震央、震級與系統延遲，親身體驗 P 波與 S 波傳播速度差，理解「預警盲區」的科學原理。</p>
+            </div>
+            <div class="feature-card glass">
+              <i data-lucide="workflow" class="feature-icon text-amber"></i>
+              <h5>次世代 AI 代理工作流</h5>
+              <p>動態展示從地震發生到社群通報中，各個專屬 AI 代理（Data、EEW、LLM）如何接力合作，自動產出報表。</p>
+            </div>
+            <div class="feature-card glass">
+              <i data-lucide="refresh-cw" class="feature-icon text-red"></i>
+              <h5>Markdown 即時同步渲染</h5>
+              <p>本站直接解析儲存庫中的原始 Markdown 簡報檔案，保持內容即時同步，並提供精美的簡報播放介面。</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Slides Panel -->
+      <div class="content-panel" id="panel-slides">
+        <div class="slides-layout">
+          <!-- Slide Explorer Sidebar -->
+          <div class="slides-sidebar glass">
+            <div class="select-deck-wrapper">
+              <label for="deck-select">選擇簡報專題</label>
+              <select id="deck-select" class="select-input">
+                <option value="eew">臺灣地震預警系統的演進與發展</option>
+                <option value="ai">AI 代理群與 LLM 在地震測報之整合應用</option>
+              </select>
+            </div>
+            <div class="search-wrapper">
+              <i data-lucide="search"></i>
+              <input type="text" id="slide-search" placeholder="搜尋投影片內容..." class="text-input">
+            </div>
+            <div class="slide-outline-container">
+              <ul class="slide-outline" id="slide-outline-list">
+                <!-- Outline items will be populated by JS -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Slide Player Main Area -->
+          <div class="slide-player-container">
+            <div class="slide-player glass" id="slide-player-card">
+              <!-- Progress Bar -->
+              <div class="slide-progress-bar">
+                <div class="slide-progress" id="slide-progress-fill" style="width: 0%;"></div>
+              </div>
+              
+              <!-- Slide Header -->
+              <div class="slide-card-header">
+                <span class="slide-layout-tag" id="slide-layout-label">Layout: 載入中</span>
+                <span class="slide-number-tag" id="slide-number-label">Slide 0 / 0</span>
+              </div>
+              
+              <!-- Slide Body -->
+              <div class="slide-card-body" id="slide-content-area">
+                <div class="loading-spinner">
+                  <i data-lucide="loader" class="animate-spin"></i>
+                  <p>載入簡報檔案中，請稍候...</p>
+                </div>
+              </div>
+              
+              <!-- Slide Controls -->
+              <div class="slide-card-controls">
+                <div class="controls-left">
+                  <button id="btn-prev-slide" class="btn btn-icon" title="上一張 (鍵盤 ←)">
+                    <i data-lucide="chevron-left"></i>
+                  </button>
+                  <button id="btn-next-slide" class="btn btn-icon" title="下一張 (鍵盤 →)">
+                    <i data-lucide="chevron-right"></i>
+                  </button>
+                  <button id="btn-play-slide" class="btn btn-icon" title="自動播放">
+                    <i data-lucide="play" id="play-icon"></i>
+                    <i data-lucide="pause" id="pause-icon" class="hidden"></i>
+                  </button>
+                </div>
+                <div class="controls-right">
+                  <button id="btn-speech-slide" class="btn btn-icon" title="語音朗讀投影片">
+                    <i data-lucide="volume-2"></i>
+                  </button>
+                  <button id="btn-fullscreen-slide" class="btn btn-icon" title="全螢幕播放">
+                    <i data-lucide="maximize"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide Notes / Additional Context -->
+            <div class="slide-notes glass">
+              <div class="notes-header">
+                <i data-lucide="file-text" class="text-cyan"></i>
+                <h6>備忘錄與補充說明</h6>
+              </div>
+              <div class="notes-body" id="slide-notes-content">
+                點擊投影片上的重點文字，或點擊朗讀按鈕聆聽說明。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earthquake Simulator Panel -->
+      <div class="content-panel" id="panel-simulator">
+        <div class="simulator-layout">
+          <!-- Controls Panel -->
+          <div class="sim-controls-panel glass">
+            <h4>模擬設定</h4>
+            <p class="text-muted mb-4">設定地震參數並觸發，觀察地震波（P波/S波）與預警系統的傳播競速。</p>
+            
+            <div class="control-group">
+              <label for="sim-epicenter">選擇震央位置</label>
+              <select id="sim-epicenter" class="select-input">
+                <option value="hualien">花蓮外海 (2024花蓮地震模擬)</option>
+                <option value="chiayi">嘉義梅山斷層 (嘉南強震模擬)</option>
+                <option value="yilan">宜蘭外海 (隱沒帶地震模擬)</option>
+                <option value="tainan">台南甲仙地震模擬</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="sim-magnitude">地震規模 (M<sub>L</sub>)</label>
+                <span id="val-magnitude">7.2</span>
+              </div>
+              <input type="range" id="sim-magnitude" min="5.0" max="8.2" step="0.1" value="7.2" class="range-input">
+            </div>
+
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="sim-delay">區域預警系統處理延遲</label>
+                <span id="val-delay">9.0 秒</span>
+              </div>
+              <input type="range" id="sim-delay" min="3.0" max="15.0" step="0.5" value="9.0" class="range-input">
+              <span class="help-text">氣象署在收到地震訊號後，運算並對全台發佈細胞簡訊所需的反應時間。</span>
+            </div>
+
+            <div class="control-group">
+              <div class="label-with-value">
+                <label for="sim-speed-scale">播放速度</label>
+                <span id="val-speed-scale">1.0x</span>
+              </div>
+              <input type="range" id="sim-speed-scale" min="0.5" max="3.0" step="0.5" value="1.0" class="range-input">
+            </div>
+
+            <div class="sim-actions">
+              <button id="btn-trigger-eq" class="btn btn-primary btn-block">
+                <i data-lucide="zap"></i> 觸發地震
+              </button>
+              <button id="btn-reset-eq" class="btn btn-secondary btn-block">
+                <i data-lucide="refresh-cw"></i> 重置模擬
+              </button>
+            </div>
+
+            <!-- Scientific Explanation Card -->
+            <div class="explanation-card">
+              <h6><i data-lucide="info" class="text-cyan"></i> 預警小常識</h6>
+              <p><strong>P波 (縱波)：</strong> 速度較快 (~6-7 km/s)，上下震動，破壞力小。預警系統利用先抵達的 P波 估算震級，爭取預警時間。</p>
+              <p><strong>S波 (橫波)：</strong> 速度較慢 (~3-4 km/s)，水平搖晃，破壞力極大。本系統模擬 S波 到達時的劇烈搖晃。</p>
+            </div>
+          </div>
+
+          <!-- Map Visualization Area -->
+          <div class="sim-map-area glass">
+            <div class="map-header">
+              <span class="status-indicator" id="sim-status-indicator">
+                <span class="indicator-dot"></span>
+                <span class="indicator-text">監測中 (安全)</span>
+              </span>
+              <div class="map-legend">
+                <span class="legend-item"><span class="legend-color p-wave-color"></span>P波</span>
+                <span class="legend-item"><span class="legend-color s-wave-color"></span>S波 (強震)</span>
+                <span class="legend-item"><span class="legend-color alert-color"></span>預警發佈範圍</span>
+              </div>
+            </div>
+            
+            <div class="canvas-wrapper">
+              <canvas id="taiwan-map-canvas" width="400" height="550"></canvas>
+            </div>
+          </div>
+
+          <!-- Alert Dashboard Area -->
+          <div class="sim-dashboard-area glass">
+            <div class="dashboard-header">
+              <h5><i data-lucide="shield-alert" class="text-red"></i> 強震即時警報監測中心</h5>
+              <div class="sim-timer">
+                <span>地震發生後：</span>
+                <strong id="sim-timer-val">00.00</strong><span> 秒</span>
+              </div>
+            </div>
+            
+            <!-- EEW System Status -->
+            <div class="system-status-container">
+              <div class="status-box" id="box-local-eew">
+                <div class="status-title">現地型預警 (Local EEW)</div>
+                <div class="status-value text-muted">未觸發</div>
+                <div class="status-desc">測站觀測 P 波達閾值即警報 (約 2-3 秒)</div>
+              </div>
+              <div class="status-box" id="box-regional-eew">
+                <div class="status-title">區域型預警 (Regional EEW)</div>
+                <div class="status-value text-muted">未觸發</div>
+                <div class="status-desc">彙整多站資料精算後，發送細胞簡訊</div>
+              </div>
+            </div>
+
+            <!-- City Alerts List -->
+            <div class="cities-list-header">
+              <span>觀測地點</span>
+              <span>S波抵達倒數</span>
+              <span>預警狀態 / 預警時間</span>
+            </div>
+            
+            <div class="cities-list" id="sim-cities-list">
+              <!-- Dynamic populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Agents Panel -->
+      <div class="content-panel" id="panel-agents">
+        <div class="agents-layout">
+          <!-- Flow Diagram and Control -->
+          <div class="agents-workspace glass">
+            <div class="workspace-header">
+              <div class="title-with-desc">
+                <h4>次世代 AI 代理地震觀測與應變網絡</h4>
+                <p class="text-muted">模擬多個專屬 AI 代理如何協同運作，從地震儀訊號到自然語言防災報告產出</p>
+              </div>
+              <button id="btn-trigger-agents" class="btn btn-primary">
+                <i data-lucide="play-circle"></i> 模擬事件應變
+              </button>
+            </div>
+            
+            <!-- Agent Nodes Flow Graph -->
+            <div class="agent-graph-container" id="agent-graph">
+              <!-- SVGs and connections will render here -->
+              <svg class="graph-svg-connections" id="graph-connections-svg"></svg>
+              
+              <!-- Agent Cards -->
+              <div class="agent-nodes-grid">
+                
+                <!-- Node 1: Sensor Network -->
+                <div class="agent-node" id="node-sensor" style="grid-column: 1; grid-row: 2;">
+                  <div class="node-icon bg-cyan-dim"><i data-lucide="radio"></i></div>
+                  <div class="node-title">地震觀測網 (Sensors)</div>
+                  <div class="node-status text-cyan">持續監測中</div>
+                  <div class="node-log">讀取全台 700+ 測站即時波形...</div>
+                </div>
+
+                <!-- Node 2: Data Ingestion Agent -->
+                <div class="agent-node" id="node-ingestion" style="grid-column: 2; grid-row: 2;">
+                  <div class="node-icon bg-blue-dim"><i data-lucide="database"></i></div>
+                  <div class="node-title">數據整合代理 (Data Agent)</div>
+                  <div class="node-status">待命</div>
+                  <div class="node-log">等待觀測網觸發信號...</div>
+                </div>
+
+                <!-- Node 3: EEW Calculation Agent -->
+                <div class="agent-node" id="node-eew" style="grid-column: 3; grid-row: 1;">
+                  <div class="node-icon bg-amber-dim"><i data-lucide="zap"></i></div>
+                  <div class="node-title">快速預警代理 (EEW Agent)</div>
+                  <div class="node-status">待命</div>
+                  <div class="node-log">等待整合數據以計算震央...</div>
+                </div>
+
+                <!-- Node 4: ShakeMap Generator Agent -->
+                <div class="agent-node" id="node-shakemap" style="grid-column: 3; grid-row: 3;">
+                  <div class="node-icon bg-red-dim"><i data-lucide="map"></i></div>
+                  <div class="node-title">震度圖生成代理 (Map Agent)</div>
+                  <div class="node-status">待命</div>
+                  <div class="node-log">等待預警參數繪製震度分佈...</div>
+                </div>
+
+                <!-- Node 5: Disaster Advisory Agent -->
+                <div class="agent-node" id="node-advisory" style="grid-column: 4; grid-row: 2;">
+                  <div class="node-icon bg-purple-dim"><i data-lucide="bell"></i></div>
+                  <div class="node-title">災害通報代理 (Advisory Agent)</div>
+                  <div class="node-status">待命</div>
+                  <div class="node-log">等待震度評估以啟動警報...</div>
+                </div>
+
+                <!-- Node 6: Seismo-LLM Synthesis Agent -->
+                <div class="agent-node" id="node-llm" style="grid-column: 5; grid-row: 2;">
+                  <div class="node-icon bg-green-dim"><i data-lucide="bot"></i></div>
+                  <div class="node-title">氣象署 Seismo-LLM</div>
+                  <div class="node-status">待命</div>
+                  <div class="node-log">等待警報摘要以撰寫市民報告...</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Agent Logs Console -->
+            <div class="agent-console">
+              <div class="console-header">
+                <span><i data-lucide="terminal"></i> 代理通訊日誌 (Agent Communications)</span>
+                <span class="console-clear" id="btn-clear-console">清除日誌</span>
+              </div>
+              <div class="console-body" id="agent-console-logs">
+                <div class="console-line system">[系統] 點擊右上方「模擬事件應變」來觀測 AI 代理群如何處置 6.8 級強烈地震。</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report Generator and Chat -->
+          <div class="agents-output-panel glass">
+            <h5><i data-lucide="clipboard-list" class="text-green"></i> 代理應變成果展示</h5>
+            
+            <div class="output-tab-container">
+              <button class="output-tab-btn active" data-output-tab="report">LLM 自動生成簡報</button>
+              <button class="output-tab-btn" data-output-tab="qa">互動式地震問答</button>
+            </div>
+            
+            <!-- Tab Content: Automated Report -->
+            <div class="output-tab-content active" id="output-tab-report">
+              <div class="report-paper">
+                <div class="report-header">
+                  <div class="report-cwa-logo"><i data-lucide="activity"></i> 中央氣象署</div>
+                  <h3>地震速報與災情分析報告</h3>
+                  <p class="report-meta">產出時間：模擬生成中...</p>
+                </div>
+                <div class="report-body" id="agent-report-body">
+                  <div class="empty-state">
+                    <i data-lucide="clipboard" class="text-muted"></i>
+                    <p>尚未有地震速報。請點擊「模擬事件應變」啟動 AI 代理協作。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content: Interactive Chat Q&A -->
+            <div class="output-tab-content" id="output-tab-qa">
+              <div class="qa-chat-container">
+                <div class="chat-messages" id="chat-messages-box">
+                  <div class="chat-message agent-msg">
+                    <i data-lucide="bot" class="avatar"></i>
+                    <div class="message-bubble">
+                      您好！我是氣象署地震測報 AI 助理。您可以向我詢問關於地震預警、地震波傳播、或是 AI 代理群如何優化測報流程的任何問題！
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-input-wrapper">
+                  <input type="text" id="chat-user-input" placeholder="輸入問題（例如：什麼是地震預警盲區？...）" class="chat-input">
+                  <button id="chat-send-btn" class="btn btn-icon btn-primary">
+                    <i data-lucide="send"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="slides-parser.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
